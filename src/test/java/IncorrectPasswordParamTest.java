@@ -1,5 +1,4 @@
-import base.BaseTestApiUser;
-import base.BaseTestUiUser;
+import base.BaseTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
@@ -10,12 +9,12 @@ import static data.TestData.*;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class ParamIncorrectPasswordTest extends BaseTestUiUser {
+public class IncorrectPasswordParamTest extends BaseTest {
 
     private String password;
 
 
-    public ParamIncorrectPasswordTest(String password) {
+    public IncorrectPasswordParamTest(String password) {
         this.password = password;
     }
 

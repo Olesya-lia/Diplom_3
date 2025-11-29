@@ -1,63 +1,51 @@
 package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.restassured.RestAssured;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;;
+import page.LoginPage;
 import page.MainPage;
 import page.RegistrationPage;
-import steps.UserStepsApi;
 
-import static constants.Constants.STELLAR_BURGER;
-import static data.TestData.*;
-import static steps.UserStepsApi.deleteUser;
-
-public class BaseTestUiUser {
+public class BaseTest {
 
     //Объявили переменные
     public static WebDriver driver;// для управления браузером
     public static MainPage mainPage; // для главной страницы
-    public static RegistrationPage registrationPage; // для регистрации
-//    private String accessToken;
-
+    public static RegistrationPage registrationPage;// для регистрации
+    public static LoginPage loginPage; // для авторизации
 
     @Before
     public void startUp() {
 
-        //RestAssured.baseURI = STELLAR_BURGER;
 // выбор браузера на основании переменной, по умолчанию хром
         String browser = System.getProperty("browser", "chrome");
-        if (browser.equals("chrome")) {
-            startBrowserChrome();
-        } else if (browser.equals("firefox")) {
-            startBrowserFirefox();
+        if (browser.equals("yandex")) {
+            driver = createYandexDriver();
+        } else {
+            driver = crateChromeDriver();
         }
-// инициализация
-        registrationPage = new RegistrationPage(driver);
+        // инициализация
+        loginPage= new LoginPage(driver);
         mainPage = new MainPage(driver);
+        registrationPage = new RegistrationPage(driver);
         mainPage.openPage();
     }
-
     // методы запуска браузеров
-    public void startBrowserChrome(){
-        driver = new ChromeDriver();
+    public WebDriver crateChromeDriver(){
         WebDriverManager.chromedriver().setup();
+        return new ChromeDriver();
     }
 
-    public void startBrowserFirefox(){
-        driver = new FirefoxDriver();
-        WebDriverManager.firefoxdriver().setup();
+    public WebDriver createYandexDriver(){
+        System.setProperty("webdriver.chrome.driver", "C:/Users/Olesya/yandex/yandexdriver/yandexdriver.exe");
+        return new ChromeDriver();
     }
 
     @After
     public void tearDown() {
-        accessToken = UserStepsApi.loginUser(EMAIL, PASSWORD);
-            if (accessToken != null) {
-                deleteUser(accessToken);
-            }
         driver.quit();
     }
 }

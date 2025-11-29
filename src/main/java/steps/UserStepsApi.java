@@ -3,18 +3,18 @@ package steps;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import model.ApiUserModel;
+import model.UserModelApi;
 
 import static constants.Constants.*;
 import static io.restassured.RestAssured.given;
 
-public class ApiUserSteps {
+public class UserStepsApi {
 
     @Step("Создание пользователя")
-    public static Response createUser(ApiUserModel userModel){
+    public static Response createUser(UserModelApi user){
         return given()
                 .contentType(ContentType.JSON)
-                .body(userModel)
+                .body(user)
                 .when()
                 .post(CREATE_USER_PATH)
                 .then()
@@ -23,7 +23,7 @@ public class ApiUserSteps {
 
     @Step("Авторизация пользователя и получение токена")
     public static String loginUser(String email, String password) {
-        ApiUserModel user = new ApiUserModel(email,password);
+        UserModelApi user = new UserModelApi(email,password);
         Response response = given()
                 .log().all()
                 .contentType(ContentType.JSON)
