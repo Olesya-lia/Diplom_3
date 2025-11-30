@@ -40,6 +40,8 @@ build/
 
 # Allure
 .allure/
-.allure-results/
-!allure-report/
-.ature/.allure/
+.ature/
+
+# Target
+!target/allure-results/
+!target/allure-reports/
