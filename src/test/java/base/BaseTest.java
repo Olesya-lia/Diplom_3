@@ -4,10 +4,12 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import page.LoginPage;
 import page.MainPage;
 import page.RegistrationPage;
+
 
 public class BaseTest {
 
@@ -25,22 +27,23 @@ public class BaseTest {
         if (browser.equals("yandex")) {
             driver = createYandexDriver();
         } else {
-            driver = crateChromeDriver();
+            driver = createChromeDriver();
         }
-        // инициализация
-        loginPage= new LoginPage(driver);
-        mainPage = new MainPage(driver);
+// инициализация
         registrationPage = new RegistrationPage(driver);
+        loginPage = new LoginPage(driver);
+        mainPage = new MainPage(driver);
         mainPage.openPage();
     }
+
     // методы запуска браузеров
-    public WebDriver crateChromeDriver(){
+    public WebDriver createChromeDriver(){
         WebDriverManager.chromedriver().setup();
         return new ChromeDriver();
     }
 
-    public WebDriver createYandexDriver(){
-        System.setProperty("webdriver.chrome.driver", "C:/Users/Olesya/yandex/yandexdriver/yandexdriver.exe");
+    public WebDriver createYandexDriver() {
+        System.setProperty("webdriver.chrome.driver", "C:/Users/Olesya/yandexdriver.exe");
         return new ChromeDriver();
     }
 
